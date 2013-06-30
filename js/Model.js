@@ -346,7 +346,8 @@ function createToken(type)
 
 	switch(type)
 	{
-		case TOKEN_TYPE_WINDOW,TOKEN_TYPE_HEATER:
+		case TOKEN_TYPE_WINDOW:
+		case TOKEN_TYPE_HEATER:
 			return new Token(type, checkIfCanFillDoubleToken, fillTilesOfDoubleToken);
 		
 		default:

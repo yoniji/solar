@@ -96,7 +96,7 @@ TileMapView.prototype = {
 		this.tokenLayer1.removeAllChildren();
 		this.tokenLayer2.removeAllChildren();
 		this.tokenLayer1.setTransform(this.startX  + this.offsetX, this.startY  + this.offsetY, 1, 1, 0, this.angleX, this.angleY);
-		this.tokenLayer2.setTransform(this.startX  + this.offsetX, this.startY  + this.offsetY);
+		this.tokenLayer2.setTransform(0, 0);
 		
 		for (token in this.model.tokens) {
 			this.tokenViews.push( new TokenView(this.model.tokens[token], this) );
@@ -224,59 +224,38 @@ TokenView.prototype = {
 	},
 	_setTokenTransform : function(type) {
 		var token = this.model;
+		
+		this.x = token.startTile.globalX;
+		this.y = token.startTile.globalY;
+			
 		switch( type ) {
-			case TOKEN_TYPE_SOLAR:
-			break
+
 			
 			case TOKEN_TYPE_HEATER:
 			//todo: change x and y base on roof type
 			this.scale = this.scale * 1.5;
-			if ( this.baseSize > 20 ) 
-			{
-				this.y = this.y - 30 * this.scale - this.x * 0.41 - 8 * this.scale * token.startTile.row;
-				this.x = this.x - 10 * this.scale - 2 * this.scale * token.startTile.column  + 20 * this.scale * token.startTile.row;
-			} else {
-				this.y = this.y - 54 * this.scale - this.x * 0.41 - 4 * this.scale * token.startTile.row;
-				this.x = this.x - 18 * this.scale - 2 * this.scale * token.startTile.column  + 16 * this.scale * token.startTile.row;
-			}
+			
+			this.x = this.x;
+			this.y = this.y - this.height * 0.9;
+
 			
 			break
 			
 			case TOKEN_TYPE_CHIMNEY:
-			if ( this.baseSize > 20 ) 
-			{
-			//todo: change x and y base on roof type
-			this.y = this.y - 24 * this.scale - this.x * 0.41  - 8 * this.scale * token.startTile.row;
-			this.x = this.x + 6 * this.scale - 1 * this.scale * token.startTile.column + 24 * this.scale * token.startTile.row;
-			} else {
-			//todo: change x and y base on roof type
-			this.y = this.y - 16 * this.scale - this.x * 0.41  - 4 * this.scale * token.startTile.row;
-			this.x = this.x + 6 * this.scale - 1 * this.scale * token.startTile.column + 12 * this.scale * token.startTile.row;	
-			}
+			this.scale = this.scale * 0.8;
+			this.x = this.x + this.width * 0.4;
+			this.y = this.y - this.height * 0.2;
 			break;
 			
 			case TOKEN_TYPE_WINDOW:
-			//todo: change x and y base on roof type
-			this.scale = this.scale * 0.8;
-			if ( this.baseSize > 20 ) {
-				this.y = this.y - 32 * this.scale - this.x * 0.41 - 6 * this.scale * token.startTile.row;
-			this.x = this.x - 2 * this.scale - 2 * this.scale * token.startTile.column  + 20 * this.scale * token.startTile.row + this.width * 0.2 * ( token.startTile.row + 1);
-			} else {
-				this.y = this.y - 12 * this.scale - this.x * 0.41 - 6 * this.scale * token.startTile.row;
-			this.x = this.x + 2 * this.scale - 2 * this.scale * token.startTile.column  + 20 * this.scale * token.startTile.row;
-			}
-			
+			this.scale = this.scale * 0.7;
+			this.x = this.x + this.width * 0.3;
+			this.y = this.y - this.height * 0.2;
 			break;
 			
 			case TOKEN_TYPE_RECEIVER:
-			
-			
-			//todo: change x and y base on roof type
-			this.y = this.y - 12 * this.scale - this.x * 0.41 - 8 * this.scale * token.startTile.row;
-			this.x = this.x + 8 * this.scale - 2 * this.scale * token.startTile.column  + 14 * this.scale * token.startTile.row;
-			break;
-			
-			default:
+			this.x = this.x + this.width * 0.3;
+			this.y = this.y - this.height * 0.4;
 			break
 		}
 	},
@@ -292,19 +271,24 @@ TokenView.prototype = {
 			this.scale = this.width / this.baseSize;
 			
 		}
-		this._setTokenTransform(token.type);
-		this._drawNormalToken(token.type);
 		
 		if ( token.type == TOKEN_TYPE_NONE || token.type == TOKEN_TYPE_SOLAR ) {
+			this._drawNormalToken(token.type);
 			this.tileMapView.tokenLayer1.addChild( this.shape );
 			var globalPoint = this.shape.localToGlobal(0 ,0 );
 
-			this.model.startTile.globalX = globalPoint.x;
-			this.model.startTile.globalY = globalPoint.y;
+			this.model.startTile.globalX = 0 + globalPoint.x;
+			this.model.startTile.globalY = 0 + globalPoint.y;
 			console.log(globalPoint);
+
 		} else {
 			this.tileMapView.tokenLayer2.addChild( this.shape );
-		}		
+			this._setTokenTransform(token.type);
+			this._drawNormalToken(token.type);
+		}
+		
+		
+		
 		this.shape.addEventListener('click',this._handleClick.bind(this) );
 		
 		
