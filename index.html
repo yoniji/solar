@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/normalize.min.css">
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <body onload="init();">
+    	<div id="solarDiyContainer">
+	    	<div id="solarDiy">    
+	    		<div id="solarCanvasContainer">    
+			        <canvas id="solarCanvas" width="694" height="412"></canvas>
+			        <div id="solarCanvasTitle"><img src="img/diy-title.png" alt="DIY" /></div>
+	    		</div>
+	        	<div id="solarDiy-panel">
+	        		<div id="solarDiy-panel-tiltle"><img src="img/diypaneltitle.png" width="88"></div>
+	        		<ul id="tokenList" class="clearfix">
+	        			<li><a class="tokenLink" id="tokenLink-solar" data-id="1" onclick="g_TileMapView.putTokenInSelection(1)"><span class="tokenLink-img"><img src="img/token-solar-icon.png"/></span><span class="tokenLink-text">太阳能发电板</span></a></li>
+	        			<li><a class="tokenLink" id="tokenLink-heater" data-id="3"  onclick="g_TileMapView.putTokenInSelection(3)"><span class="tokenLink-img"><img src="img/token-heater-icon.png"/></span><span class="tokenLink-text">太阳能热水器</span></a></li>
+	        			<li><a class="tokenLink" data-id="5" onclick="g_TileMapView.putTokenInSelection(5)" id="tokenLink-receiver"><span class="tokenLink-img"><img src="img/token-sl-icon.png" /></span><span class="tokenLink-text">卫星接收器</span></a></li>
+	        			<li><a class="tokenLink" data-id="2"  onclick="g_TileMapView.putTokenInSelection(2)" id="tokenLink-window"><span class="tokenLink-img"><img src="img/token-window-icon.png" /></span><span class="tokenLink-text">天窗</span></a></li>
+	        			<li><a class="tokenLink" data-id="4" onclick="g_TileMapView.putTokenInSelection(4)" id="tokenLink-chimney"><span class="tokenLink-img"><img src="img/token-chimney-icon.png" /></span><span class="tokenLink-text">烟囱</span></a></li>
+	        			<li><a class="tokenLink"  id="tokenLink-invertor" onclick="g_TileMapView.showInvertor()"><span class="tokenLink-img"><img src="img/invertor-icon.png" /></span><span class="tokenLink-text">逆变器</span></a></a></li>
+	        		</ul>
+	        		
+	        		<div id="diy-switcher"><a title="开关"><img src="img/diyswitcher.png" width="35" /></a></div>
+	        	</div>
+	    	</div>
+    	</div>
+        <script src="js/vendor/jquery-1.9.1.min.js"></script>
+        <script src="js/vendor/createjs.min.js"></script>
+        <script src="js/State.js"></script>
+        <script src="js/Model.js"></script>
+        <script src="js/View.js"></script>
+        <script src="js/InGameState.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>

@@ -1,0 +1,246 @@
+/* ==========================================================================
+   HTML5 Boilerplate styles - h5bp.com (generated via initializr.com)
+   ========================================================================== */
+
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
+}
+
+body {
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+img {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.chromeframe {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+body {
+	background: url(../img/background.jpg) no-repeat center top #000;
+}
+#solarDiyContainer {
+	position: absolute;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.5);
+}
+#solarDiy {
+	position: absolute;
+	left: 50%;
+	top:50%;
+	margin-left: -490px;
+	margin-top: -250px;
+	width: 960px;
+	height: 480px;
+	padding: 10px;
+	background: rgba(255,255,255,0.1);
+}
+#solarCanvasContainer {
+	background: #dd5519;
+	width: 960px;
+	height: 480px;
+	position: relative;
+}
+#solarCanvas {
+	background: #df5e25;
+	margin-top:55px;
+	margin-left: 16px;
+}
+#solarCanvasTitle {
+	position: absolute;
+	left: 16px;
+	top: 26px;
+}
+#solarDiy-panel {
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	height: 480px;
+	padding-left: 40px;
+	padding-right: 30px;
+	width: 154px;
+	background: #DE742B;
+}
+#solarDiy-panel-tiltle{
+	padding-top: 80px;
+	
+}
+#tokenList,#tokenList li {
+	margin-left: 0;
+	padding-left: 0;
+	list-style: none;
+}
+#tokenList li {
+	display: inline-block;
+	float: left;
+	width: 64px;
+	margin-right: 10px;
+}
+.tokenLink {
+	display: block;
+	width: 100%;
+	height: 100%;
+	
+	border-radius: 5px;
+	text-align: center;
+	color: #FFF;
+	cursor: pointer;
+}
+.tokenLink:hover .tokenLink-img,.tokenLink:active  .tokenLink-img{
+	background: #EF9034;
+}
+
+.tokenLink-img,.tokenLink-text {
+	display: block;
+	text-align: center;
+	font-size: 10px;
+}
+.tokenLink-text {
+	height: 24px;
+	line-height: 20px;
+}
+.tokenLink-img {
+	width: 100%;
+	height: 64px;
+	border-radius: 10px;
+	background-color: #D2531C;
+}
+
+#tokenLink-solar img{
+	padding-top: 5px;
+	width: 35px;
+}
+#tokenLink-heater img{
+	padding-top: 9px;
+	width:55px; 
+}
+#tokenLink-receiver img{
+	padding-top: 12px;
+	width:50px; 
+}
+#tokenLink-window img{
+	padding-top: 9px;
+	width:60px; 
+}
+#tokenLink-chimney img{
+	padding-top: 11px;
+	width:40px; 
+}
+#tokenLink-invertor img{
+	padding-top: 13px;
+	width:40px; 
+}
+#diy-switcher {
+	cursor: pointer;
+	padding-left: 110px;
+	padding-top: 10px;
+}
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+}
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
