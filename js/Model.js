@@ -19,7 +19,10 @@ var g_canvas,
 g_stage,
 g_TileMap,
 g_TileMapView,
-g_TileId = 0;
+g_TileId = 0,
+g_assets;
+g_area = 5;
+g_type = 0;
 
 var TILE_MAP_TYPE_FLAT = 1,
 TILE_MAP_TYPE_DESCENDENT = 2,
@@ -69,8 +72,9 @@ TileMap.prototype = {
 			break;
 			
 			default:
-			this.height = Math.round(Math.sqrt(this.area));
-			this.width = this.height;
+			var widthLengthRatio = 0.6;
+			this.width = Math.round(Math.sqrt(this.area / ( widthLengthRatio )));
+			this.height = Math.round(this.width * widthLengthRatio );
 			break;
 		}
 		console.log( 'width:' + this.width + ' and length: ' + this.height );

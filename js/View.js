@@ -86,7 +86,15 @@ TileMapView.prototype = {
 			
 			default:
 			this.tileMapPixelWidth = 240;
-			this.tileMapPixelHeight = 240;
+			this.tileMapPixelHeight = 144;
+			this.angleX = -50;
+			this.angleY = -28;
+			this.startX = 195;
+			this.startY = 148;
+			this.tileMapBmp = new createjs.Bitmap("img/flat-roof.png");
+			this.tileMapBmp.setTransform(165,27,0.5,0.5);
+			g_stage.addChild(this.tileMapBmp);	
+
 			break
 		}
 		
@@ -102,13 +110,20 @@ TileMapView.prototype = {
 			this.tokenViews.push( new TokenView(this.model.tokens[token], this) );
 			this.tokenViews[ this.tokenViews.length - 1 ].drawToken();
 		}
-
-		
-
 	},
 	_initInvertor : function() {
 		this.switch = new createjs.Bitmap("img/invertor.png");
-		this.switch.setTransform(446 , 215, 0.5, 0.5);
+		switch( this.model.type ) {
+			case TILE_MAP_TYPE_DOUBLE:
+			this.switch.setTransform(446 , 215, 0.5, 0.5);
+			break;
+			case TILE_MAP_TYPE_DESCENDENT:
+			this.switch.setTransform(490 , 212, 0.5, 0.5);
+			break;
+			default:
+			this.switch.setTransform(503 , 213, 0.5, 0.5);
+			break;
+		}
 		this.switch.alpha = 0;;
 		g_stage.addChild(this.switch);
 	},
@@ -199,7 +214,12 @@ TokenView.prototype = {
 		this._calculateBitmapBaseSize();
 		switch( type ) {
 			case TOKEN_TYPE_SOLAR:
-			this.img = "img/token-solar-" + this.baseSize + ".png";
+			if ( g_type == TILE_MAP_TYPE_FLAT ) {
+				this.img = "img/token-solar-p-" + this.baseSize + ".png";
+			} else {
+				this.img = "img/token-solar-" + this.baseSize + ".png";
+			}
+			
 			return new createjs.Bitmap(this.img);
 			
 			case TOKEN_TYPE_HEATER:
@@ -222,7 +242,7 @@ TokenView.prototype = {
 			return null;
 		}
 	},
-	_setTokenTransform : function(type) {
+	_setTokenOffset : function(type) {
 		var token = this.model;
 		
 		this.x = token.startTile.globalX;
@@ -230,27 +250,49 @@ TokenView.prototype = {
 			
 		switch( type ) {
 
+			case TOKEN_TYPE_SOLAR:
+			if ( g_type == TILE_MAP_TYPE_FLAT ) {
+				this.x = this.x - this.width * 0.4;
+				this.y = this.y - this.height * 0.7;
+			}
+			break;
 			
 			case TOKEN_TYPE_HEATER:
-			//todo: change x and y base on roof type
-			this.scale = this.scale * 1.5;
+			this.scale = this.scale * 1.4;
+			if ( g_type == TILE_MAP_TYPE_FLAT ) {
+				this.x = this.x + this.width * 0.1;
+				this.y = this.y - this.height * 1.1;
+			} else {
+				this.x = this.x;
+				this.y = this.y - this.height * 0.7;
+			}
 			
-			this.x = this.x;
-			this.y = this.y - this.height * 0.9;
-
 			
 			break
 			
 			case TOKEN_TYPE_CHIMNEY:
 			this.scale = this.scale * 0.8;
-			this.x = this.x + this.width * 0.4;
-			this.y = this.y - this.height * 0.2;
+			if ( g_type == TILE_MAP_TYPE_FLAT ) {
+				this.x = this.x + this.width * 0.6;
+				this.y = this.y - this.height * 0.5;
+			} else {
+				this.x = this.x + this.width * 0.4;
+				this.y = this.y - this.height * 0.2;
+			}
+			
 			break;
 			
 			case TOKEN_TYPE_WINDOW:
 			this.scale = this.scale * 0.7;
-			this.x = this.x + this.width * 0.3;
-			this.y = this.y - this.height * 0.2;
+			if ( g_type == TILE_MAP_TYPE_FLAT ) {
+				this.x = this.x + this.width * 0.5;
+				this.y = this.y - this.height * 0.4;
+			} else {
+				this.x = this.x + this.width * 0.3;
+				this.y = this.y - this.height * 0.2;
+			}
+			
+			
 			break;
 			
 			case TOKEN_TYPE_RECEIVER:
@@ -272,18 +314,28 @@ TokenView.prototype = {
 			
 		}
 		
-		if ( token.type == TOKEN_TYPE_NONE || token.type == TOKEN_TYPE_SOLAR ) {
+		if ( token.type == TOKEN_TYPE_NONE ) {
 			this._drawNormalToken(token.type);
 			this.tileMapView.tokenLayer1.addChild( this.shape );
 			var globalPoint = this.shape.localToGlobal(0 ,0 );
 
-			this.model.startTile.globalX = 0 + globalPoint.x;
-			this.model.startTile.globalY = 0 + globalPoint.y;
-			console.log(globalPoint);
+			this.model.startTile.globalX = globalPoint.x;
+			this.model.startTile.globalY = globalPoint.y;
 
+		} else if (token.type == TOKEN_TYPE_SOLAR) {
+		
+			if ( g_type == TILE_MAP_TYPE_FLAT ) {
+				this.tileMapView.tokenLayer2.addChild( this.shape );
+				this._setTokenOffset(token.type);
+				this._drawNormalToken(token.type);
+			} else {
+				this._drawNormalToken(token.type);
+				this.tileMapView.tokenLayer1.addChild( this.shape );
+			}
+			
 		} else {
 			this.tileMapView.tokenLayer2.addChild( this.shape );
-			this._setTokenTransform(token.type);
+			this._setTokenOffset(token.type);
 			this._drawNormalToken(token.type);
 		}
 		
@@ -293,4 +345,9 @@ TokenView.prototype = {
 		
 		
 	}
+}
+
+
+function showAlertMessage(text) {
+	alert(text);
 }
