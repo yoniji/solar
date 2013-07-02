@@ -15,72 +15,84 @@
 
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
-    <body onload="init();">
+    <body>
+    	
     	<div id="solarDiyContainer">
+    	
+    		<div id="testInput">
+    			<h3>面积输入测试</h3>
+    			<p>屋顶面积：<input id="ipt-area" type="number" value="100" /> 平方米</p>
+    			<p><button id="btn-ok">确认</button>  <button id="btn-import">导入配置</button></p>
+    		</div>
+    		<!-- please remvoe #testInput before launch -->
+    		
     		<div id="solarDiy-loading">
 	    		<img src="img/diyloader.gif" />
 	    		<span id="solarDiy-loadingProgress">0</span>
-    		</div>
-	    	<div id="solarDiy" style="display:none">    
-	    		<div id="solarCanvasContainer"  style="display:none">    
-			        <canvas id="solarCanvas" width="694" height="412"></canvas>
-			        <div id="solarCanvasTitle"><img src="img/diy-title.png" alt="DIY" /></div>
-			        
-	    		</div><!--/solarCanvasContainer-->
-	    		<div id="solarSelectContainer">    
-			        <ul id="solarSelectList">
-			        	<li>
-			        	<a class="solarSelectItem" id="solarSelect-flat"  data-id="1">
-			        	<img src="img/flat-roof.png" />
-			        	<p class="solarSelectTitle">平顶房屋</p>
-			        	</a>
-			        	</li>
-			        	<li>
-				        	<a class="solarSelectItem" id="solarSelect-pitch" data-id="2">
-				        	<img src="img/pitched-roof.png"/>
-				        	<p class="solarSelectTitle">斜顶房屋</p>
+    		</div><!--/solarDiy-loading-->
+    		
+	    	<div id="solarDiy" style="display:none">  
+	    		<div id="solarDiyInner">  
+		    		<div id="solarCanvasContainer"  style="display:none">    
+				        <canvas id="solarCanvas" width="694" height="412"></canvas>
+				        <div id="solarCanvasTitle"><img src="img/diy-title.png" alt="DIY" /></div>
+		    		</div><!--/solarCanvasContainer-->
+		    		
+		    		<div id="solarSelectContainer" style="display:none">    
+				        <ul id="solarSelectList">
+				        	<li>
+				        	<a class="solarSelectItem" id="solarSelect-flat"  data-id="1">
+				        	<img src="img/flat-roof.png" />
+				        	<p class="solarSelectTitle">平顶房屋</p>
 				        	</a>
-			        	</li>
-			        	<li>
-			        		<a class="solarSelectItem" id="solarSelect-double" data-id="3">
-				        	<img src="img/mixed-roof.png" />
-				        	<p class="solarSelectTitle">复合房屋</p>
-				        	</a>
-				        </li>
-			        </ul>
-			        <div id="solarCanvasTitle"><img src="img/diy-select-title.png" alt="DIY" width="110" /></div>
-	    		</div><!--/solarSelectContainer-->
+				        	</li>
+				        	<li>
+					        	<a class="solarSelectItem" id="solarSelect-pitch" data-id="2">
+					        	<img src="img/pitched-roof.png"/>
+					        	<p class="solarSelectTitle">斜顶房屋</p>
+					        	</a>
+				        	</li>
+				        	<li>
+				        		<a class="solarSelectItem" id="solarSelect-double" data-id="3">
+					        	<img src="img/mixed-roof.png" />
+					        	<p class="solarSelectTitle">复合房屋</p>
+					        	</a>
+					        </li>
+				        </ul>
+				        <div id="solarCanvasTitle"><img src="img/diy-select-title.png" alt="DIY" width="110" /></div>
+		    		</div><!--/solarSelectContainer-->
 	    		
-	    		<a id="solarDiyClose"><img src="img/diy-close.png" alt="close" title="close" /></a>
+		    		<a id="solarDiyClose"><img src="img/diy-close.png" alt="close" title="close" /></a>
 	    		
-	        	<div id="solarDiy-panel">
-	        	
-	        		<div id="solarDiy-panel-widget" style="display:none">
-		        		<div id="solarDiy-panel-title"><img src="img/diypaneltitle.png" width="88"></div>
-		        		<ul id="tokenList" class="clearfix">
-		        			<li><a class="tokenLink" id="tokenLink-solar" data-id="1"><span class="tokenLink-img"><img src="img/token-solar-icon.png"/></span><span class="tokenLink-text">太阳能发电板</span></a></li>
-		        			<li><a class="tokenLink" id="tokenLink-heater" data-id="3"><span class="tokenLink-img"><img src="img/token-heater-icon.png"/></span><span class="tokenLink-text">太阳能热水器</span></a></li>
-		        			<li><a class="tokenLink" data-id="5" id="tokenLink-receiver"><span class="tokenLink-img"><img src="img/token-sl-icon.png" /></span><span class="tokenLink-text">卫星接收器</span></a></li>
-		        			<li><a class="tokenLink" data-id="2" id="tokenLink-window"><span class="tokenLink-img"><img src="img/token-window-icon.png" /></span><span class="tokenLink-text">天窗</span></a></li>
-		        			<li><a class="tokenLink" data-id="4" id="tokenLink-chimney"><span class="tokenLink-img"><img src="img/token-chimney-icon.png" /></span><span class="tokenLink-text">烟囱</span></a></li>
-		        			<li><a class="tokenLink"  id="tokenLink-invertor"><span class="tokenLink-img"><img src="img/invertor-icon.png" /></span><span class="tokenLink-text">逆变器</span></a></a></li>
-		        		</ul>
+		        	<div id="solarDiy-panel">
+		        	
+		        		<div id="solarDiy-panel-widget" style="display:none">
+			        		<div id="solarDiy-panel-title"><img src="img/diypaneltitle.png" width="88"></div>
+			        		<ul id="tokenList" class="clearfix">
+			        			<li><a class="tokenLink" id="tokenLink-solar" data-id="1"><span class="tokenLink-img"><img src="img/token-solar-icon.png"/></span><span class="tokenLink-text">太阳能发电板</span></a></li>
+			        			<li><a class="tokenLink" id="tokenLink-heater" data-id="3"><span class="tokenLink-img"><img src="img/token-heater-icon.png"/></span><span class="tokenLink-text">太阳能热水器</span></a></li>
+			        			<li><a class="tokenLink" data-id="5" id="tokenLink-receiver"><span class="tokenLink-img"><img src="img/token-sl-icon.png" /></span><span class="tokenLink-text">卫星接收器</span></a></li>
+			        			<li><a class="tokenLink" data-id="2" id="tokenLink-window"><span class="tokenLink-img"><img src="img/token-window-icon.png" /></span><span class="tokenLink-text">天窗</span></a></li>
+			        			<li><a class="tokenLink" data-id="4" id="tokenLink-chimney"><span class="tokenLink-img"><img src="img/token-chimney-icon.png" /></span><span class="tokenLink-text">烟囱</span></a></li>
+			        			<li><a class="tokenLink"  id="tokenLink-invertor"><span class="tokenLink-img"><img src="img/invertor-icon.png" /></span><span class="tokenLink-text">逆变器</span></a></a></li>
+			        		</ul>
+			        		
+			        		<div id="diy-switcher"><a title="开关"><img src="img/diyswitcher.png" width="35" /></a></div>
+		        		</div><!--/solarDiy-panel-widget-->
 		        		
-		        		<div id="diy-switcher"><a title="开关"><img src="img/diyswitcher.png" width="35" /></a></div>
-	        		</div>
-	        		
-	        		<div id="solar-panel-select">
-		        		<div id="solar-panel-login">
-		        			<div id="solar-panel-loginTitle">登陆获取更多服务</div>
-		        			<form id="diy-loginForm" method="post" name="diy-loginForm" action="#">
-		        				<input class="textinput" name="username" placeholder="用户名" />
-		        				<input class="textinput" name="password" type="password" placeholder="密码" />
-		        				<p><input id="diy-loginSubmit" type="submit" value="登陆" /> <span id="diy-loginLinks"><a href="#">新用户？</a><a href="#">忘记密码？</a></span></p>
-		        			</form>
-		        		</div>
-		        		<a id="solar-panel-select-next"><img src="img/diy-select-next" alt="下一步" /></a>
-	        		</div>
-	        	</div>
+		        		<div id="solar-panel-select" style="display:none">
+			        		<div id="solar-panel-login">
+			        			<div id="solar-panel-loginTitle">登陆获取更多服务</div>
+			        			<form id="diy-loginForm" method="post" name="diy-loginForm" action="#">
+			        				<input class="textinput" name="username" placeholder="用户名" />
+			        				<input class="textinput" name="password" type="password" placeholder="密码" />
+			        				<p><input id="diy-loginSubmit" type="submit" value="登陆" /> <span id="diy-loginLinks"><a href="#">新用户？</a><a href="#">忘记密码？</a></span></p>
+			        			</form>
+			        		</div>
+			        		<a id="solar-panel-select-next"><img src="img/diy-select-next.png" alt="下一步" /></a>
+		        		</div><!--/solar-panel-select-->
+		        	</div><!--/solar-diy-panel-->
+	        	</div><!--/solarDiyInner-->
 	    	</div>
     	</div>
         <script src="js/vendor/jquery-1.9.1.min.js"></script>

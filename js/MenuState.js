@@ -1,6 +1,8 @@
 
 function OnEnterMenuState()
 {
+	
+	
 	$('#solarSelectList li').bind('click', function(){
 		$('#solarSelectList li.selected').removeClass('selected');
 		$(this).addClass('selected');
@@ -18,7 +20,11 @@ function OnEnterMenuState()
 		}
 	
 	});
+	
+	
+	
 	$('#solarDiy').fadeIn();
+	$('#solarSelectContainer,#solar-panel-select').show();
 }
 
 function OnExitMenuState()

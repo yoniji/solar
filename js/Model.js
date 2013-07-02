@@ -1,3 +1,30 @@
+////////////////////////////
+var g_canvas,
+g_stage,
+g_TileMap,
+g_TileMapView,
+g_TileId = 0,
+g_assets,
+g_area = 0,
+g_type = 0,
+g_isReadFromConfig = false,
+g_config = null;
+
+var TILE_MAP_TYPE_FLAT = 1,
+TILE_MAP_TYPE_DESCENDENT = 2,
+TILE_MAP_TYPE_DOUBLE = 3,
+TILE_WIDTH = 1,
+TILE_HEIGHT = 1.6;
+
+var TOKEN_TYPE_NONE = 0,
+TOKEN_TYPE_SOLAR = 1,
+TOKEN_TYPE_WINDOW = 2,
+TOKEN_TYPE_HEATER = 3,
+TOKEN_TYPE_CHIMNEY = 4;
+TOKEN_TYPE_RECEIVER = 5;
+
+
+////////////////////////////
 var Tile = function(row, column)
 {
 	this.row = row;
@@ -14,28 +41,6 @@ Tile.prototype = {
 	}
 }
 
-////////////////////////////
-var g_canvas,
-g_stage,
-g_TileMap,
-g_TileMapView,
-g_TileId = 0,
-g_assets;
-g_area = 5;
-g_type = 0;
-
-var TILE_MAP_TYPE_FLAT = 1,
-TILE_MAP_TYPE_DESCENDENT = 2,
-TILE_MAP_TYPE_DOUBLE = 3,
-TILE_WIDTH = 1,
-TILE_HEIGHT = 1.6;
-
-var TOKEN_TYPE_NONE = 0,
-TOKEN_TYPE_SOLAR = 1,
-TOKEN_TYPE_WINDOW = 2,
-TOKEN_TYPE_HEATER = 3,
-TOKEN_TYPE_CHIMNEY = 4;
-TOKEN_TYPE_RECEIVER = 5;
 
 var TileMap = function(area, type)
 {
@@ -45,11 +50,12 @@ var TileMap = function(area, type)
 	this.height = 0;
 	this.rowCount = 0;
 	this.columnCount = 0;
+	this.hasInvertor = false;
 
 	this.tiles = [];
 	this.tokens = [];	
 	
-	this.init(tokenList);
+	this.init();
 };
 TileMap.prototype = {
 	init : function() {
@@ -66,7 +72,7 @@ TileMap.prototype = {
 			break;
 			
 			case TILE_MAP_TYPE_DESCENDENT:
-			var widthLengthRatio = 0.54;
+			var widthLengthRatio = 0.5;
 			this.width = Math.round(Math.sqrt(this.area / ( widthLengthRatio * 2 )));
 			this.height = Math.round(this.width * widthLengthRatio );
 			break;
@@ -114,9 +120,78 @@ TileMap.prototype = {
 		}
 		
 	},
+	_parseConfigToArray : function(tokenList) {
+		var tokens = [];
+		var token,tile;
+		for ( i = 0 ; i < tokenList.length; i++ ) {
+			token = tokenList[i];
+			var newToken = createToken(token.type);
+			
+			newToken.startTile = this.getTile(token.startTile.row, token.startTile.column);
+			newToken.tiles = token.tiles.slice(0);
+			
+			for ( index in token.tiles ) {
+				tile = this.getTile(token.tiles[index].row, token.tiles[index].column);
+				tile.token = newToken;
+			}
+			
+			tokens.push(newToken);
+			
+		}
+		return tokens;
+	},
+	getPanelCount : function() {
+		var panelCount = 0;
+		for ( i in this.tokens ) {
+			var token = this.tokens[i];
+			if (token.type == TOKEN_TYPE_SOLAR) {
+				panelCount ++;
+			}
+		}
+		return panelCount;
+	},
+	loadFromConfig : function(config) {
+		if ( config && config.tokens.length > 0 ) {
+			this.tokens = this._parseConfigToArray(config.tokens);
+			console.log(config.hasInvertor);
+			this.hasInvertor = config.hasInvertor;
+		}
+		
+	},
+	exportConfig : function() {
+		var panelCount = this.getPanelCount();
+		if (! this.hasInvertor ) {
+			showAlertMessage("您还没有放入逆变器");
+			return;
+		}
+		if (panelCount < 1) {
+			showAlertMessage("您还没有放入太阳能发电板");
+			return;
+		}
+		var config = {};
+		config.area = this.area;
+		config.type = 3;
+		config.hasInvertor = this.hasInvertor;
+		config.panelCount = 0;
+		config.tokens = [];
+		
+		for ( i in this.tokens ) {
+			var token = this.tokens[i];
+			var tokenToPush = {};
+			if (token.type == TOKEN_TYPE_SOLAR) {
+				config.panelCount ++;
+			}
+			tokenToPush.type = token.type;
+			tokenToPush.tiles = token.tiles.slice(0);
+			tokenToPush.startTile = {'row':token.startTile.row,'column':token.startTile.column};
+			config.tokens.push(tokenToPush);
+		}
+		g_config = config;
+		console.log(config);
+	},
 	initTokenArray : function(tokenList) {
 		if ( tokenList && tokenList.length > 0 ) {
-			this.tokens = tokenList.slice(0);
+			this.tokens = this._parseConfigToArray(tokenList);
 			return;
 		}
 		for(i = 0; i < this.tiles.length ; i++)
@@ -357,4 +432,42 @@ function createToken(type)
 		default:
 			return new Token(type, checkIfCanFillSingleToken, fillTilesOfSingleToken);
 	}
+}
+function resetGlobal() {
+	if (g_stage) {
+		g_stage.clear();
+	}
+	g_canvas = null;
+	g_stage = null;
+	g_TileMap = null;
+	g_TileMapView = null;
+	g_TileId  = null;
+	g_assets = {};
+	g_area = 0;
+	g_type = 0;
+	
+	g_isReadFromConfig = false;
+	g_config = null;
+	
+}
+
+function init(config) {
+
+	SM.RegisterState( "menu", MenuState );
+	SM.RegisterState( "preload", PreloadState );
+	SM.RegisterState( "ingame", InGameState );
+	
+	if ( config ) {
+		if ( typeof(config) == 'number' ) {
+		
+			g_area = config;
+			
+		} else if ( typeof(config) == 'object' ) {
+			g_isReadFromConfig = true;
+			g_config = config;
+			
+		}		
+	}
+	
+	SM.SetStateByName( "preload" );
 }

@@ -9,9 +9,9 @@ function OnEnterPreloadState()
 	totalLoaded = 0;
 
 	manifest = [
-		{src:'./img/mixed-roof.png', id:"roof-mixed"},
-		{src:'./img/pitched-roof.png', id:"roof-pitched"},
-		{src:'./img/flat-roof.png', id:"roof-flat"},
+		{src:'./img/mixed-roof.png', id:"mixed-roof"},
+		{src:'./img/pitched-roof.png', id:"pitched-roof"},
+		{src:'./img/flat-roof.png', id:"flat-roof"},
 		
 		{src:'./img/invertor-icon.png', id:"invertor-icon"},
 		{src:'./img/invertor.png', id:"invertor"},
@@ -34,10 +34,10 @@ function OnEnterPreloadState()
 		{src:'./img/token-sl-100.png', id:"token-sl-100"},
 		{src:'./img/token-sl-icon.png', id:"token-sl-icon"},
 		
-		{src:'./img/token-solar-20.png', id:"token-solar-p-20"},
-		{src:'./img/token-solar-32.png', id:"token-solar-p-32"},
-		{src:'./img/token-solar-50.png', id:"token-solar-p-50"},
-		{src:'./img/token-solar-100.png', id:"token-solar-p-100"},
+		{src:'./img/token-solar-p-20.png', id:"token-solar-p-20"},
+		{src:'./img/token-solar-p-32.png', id:"token-solar-p-32"},
+		{src:'./img/token-solar-p-50.png', id:"token-solar-p-50"},
+		{src:'./img/token-solar-p-100.png', id:"token-solar-p-100"},
 		{src:'./img/token-solar-20.png', id:"token-solar-20"},
 		{src:'./img/token-solar-32.png', id:"token-solar-32"},
 		{src:'./img/token-solar-50.png', id:"token-solar-50"},
@@ -58,7 +58,6 @@ function OnEnterPreloadState()
     preload.addEventListener("fileload", handleFileLoad);
     preload.addEventListener("error", handleError);
 
-	
 	preload.loadManifest(manifest);
 	
 	
@@ -67,13 +66,20 @@ function OnEnterPreloadState()
 function OnExitPreloadState()
 {
 	$('#solarDiy-loading').fadeOut();
+	$('#solarDiyClose').bind('click',function() {
+		var r=confirm('您的DIY结果还没有保存，确认关闭么');
+		if (r) {
+			$('#solarDiyContainer').fadeOut();
+			resetGlobal();
+		}
+	});
 }
 
 
 function handleFileLoad(event) 
 {	
-	var asset = { id: event.id, src: event.src };
-	g_assets[ event.id ] = asset;
+	var asset = { id: event.item.id, img: event.result };
+	g_assets[ event.item.id ] = asset;
 }
 
 function handleError(event) {
@@ -81,7 +87,6 @@ function handleError(event) {
 }
 
 function handleProgress(event) {
-		console.log(event.loaded);
 		percent = Math.floor(event.loaded * 100 );
 		progressUI.html(percent);
 		
@@ -89,7 +94,12 @@ function handleProgress(event) {
 
 function handleComplete(event) 
 {
-	SM.SetStateByName( "menu" );
+	if ( g_isReadFromConfig ) {
+		SM.SetStateByName( "ingame" );
+	} else {
+		SM.SetStateByName( "menu" );
+	}
+	
 }
 
 

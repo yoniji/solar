@@ -55,6 +55,7 @@ TileMapView.prototype = {
 		
 		this._initInvertor();
 		this._drawTokens();
+		
 	},
 	_drawTileMap : function() {
 		switch( this.model.type ) {
@@ -66,21 +67,22 @@ TileMapView.prototype = {
 			this.startX = 205;
 			this.startY = 160;
 			//create house bitmap
-			this.tileMapBmp = new createjs.Bitmap("img/mixed-roof.png");
+			this.tileMapBmp = new createjs.Bitmap(g_assets['mixed-roof'].img);
 			this.tileMapBmp.setTransform(108,48,0.5,0.5);
 			g_stage.addChild(this.tileMapBmp);	
 			break;
 			
 			case TILE_MAP_TYPE_DESCENDENT:
-			this.tileMapPixelWidth = 260;
-			this.tileMapPixelHeight = 140;
+			this.tileMapPixelWidth = 240;
+			this.tileMapPixelHeight = 120;
 			this.angleX = -30;
 			this.angleY = -24;
-			this.startX = 198;
-			this.startY = 140;
+			this.startX = 225;
+			this.startY = 165;
 			//create house bitmap
-			this.tileMapBmp = new createjs.Bitmap("img/pitched-roof.png");
-			this.tileMapBmp.setTransform(70,10,0.5,0.5);
+			this.tileMapBmp = new createjs.Bitmap(g_assets['pitched-roof'].img);
+			console.log(g_assets['pitched-roof']);
+			this.tileMapBmp.setTransform(130,46,0.5,0.5);
 			g_stage.addChild(this.tileMapBmp);	
 			break;
 			
@@ -91,7 +93,7 @@ TileMapView.prototype = {
 			this.angleY = -28;
 			this.startX = 195;
 			this.startY = 148;
-			this.tileMapBmp = new createjs.Bitmap("img/flat-roof.png");
+			this.tileMapBmp = new createjs.Bitmap(g_assets['flat-roof'].img);
 			this.tileMapBmp.setTransform(165,27,0.5,0.5);
 			g_stage.addChild(this.tileMapBmp);	
 
@@ -110,25 +112,32 @@ TileMapView.prototype = {
 			this.tokenViews.push( new TokenView(this.model.tokens[token], this) );
 			this.tokenViews[ this.tokenViews.length - 1 ].drawToken();
 		}
+		if ( this.model.hasInvertor ) {
+			this.switch.alpha = 1;
+		}
 	},
 	_initInvertor : function() {
-		this.switch = new createjs.Bitmap("img/invertor.png");
+		this.switch = new createjs.Bitmap(g_assets['invertor'].img);
 		switch( this.model.type ) {
 			case TILE_MAP_TYPE_DOUBLE:
 			this.switch.setTransform(446 , 215, 0.5, 0.5);
 			break;
 			case TILE_MAP_TYPE_DESCENDENT:
-			this.switch.setTransform(490 , 212, 0.5, 0.5);
+			this.switch.setTransform(480 , 215, 0.5, 0.5);
 			break;
 			default:
 			this.switch.setTransform(503 , 213, 0.5, 0.5);
 			break;
 		}
-		this.switch.alpha = 0;;
+		if (! this.model.hasInvertor ) {
+			this.switch.alpha = 0;
+		}
+		
 		g_stage.addChild(this.switch);
 	},
 	showInvertor : function() {
 		this.switch.alpha = 1;
+		this.model.hasInvertor = true;
 	},
 	putTokenInSelection : function(type) {
 		this.model.putTokenInSelection(type);
@@ -150,9 +159,6 @@ var TokenView = function(tokenModel, tileMapView) {
 	
 }
 TokenView.prototype = {
-	_inti : function(){
-		
-	},
 	_drawNormalToken : function(type) {
 	
 		switch( type ) {
@@ -215,28 +221,28 @@ TokenView.prototype = {
 		switch( type ) {
 			case TOKEN_TYPE_SOLAR:
 			if ( g_type == TILE_MAP_TYPE_FLAT ) {
-				this.img = "img/token-solar-p-" + this.baseSize + ".png";
+				this.img = "token-solar-p-" + this.baseSize;
 			} else {
-				this.img = "img/token-solar-" + this.baseSize + ".png";
+				this.img = "token-solar-" + this.baseSize;
 			}
 			
-			return new createjs.Bitmap(this.img);
+			return new createjs.Bitmap(g_assets[this.img].img);
 			
 			case TOKEN_TYPE_HEATER:
-			this.img = "img/token-heater-" + this.baseSize + ".png";
-			return new createjs.Bitmap(this.img);
+			this.img = "token-heater-" + this.baseSize;
+			return new createjs.Bitmap(g_assets[this.img].img);
 			
 			case TOKEN_TYPE_CHIMNEY:
-			this.img = "img/token-chimney-" + this.baseSize + ".png";
-			return new createjs.Bitmap(this.img);
+			this.img = "token-chimney-" + this.baseSize;
+			return new createjs.Bitmap(g_assets[this.img].img);
 			
 			case TOKEN_TYPE_WINDOW:
-			this.img = "img/token-window-" + this.baseSize + ".png";
-			return new createjs.Bitmap(this.img);
+			this.img = "token-window-" + this.baseSize;
+			return new createjs.Bitmap(g_assets[this.img].img);
 			
 			case TOKEN_TYPE_RECEIVER:
-			this.img = "img/token-sl-" + this.baseSize + ".png";
-			return new createjs.Bitmap(this.img);
+			this.img = "token-sl-" + this.baseSize;
+			return new createjs.Bitmap(g_assets[this.img].img);
 			
 			default:
 			return null;
@@ -264,7 +270,7 @@ TokenView.prototype = {
 				this.y = this.y - this.height * 1.1;
 			} else {
 				this.x = this.x;
-				this.y = this.y - this.height * 0.7;
+				this.y = this.y - this.height * 0.8;
 			}
 			
 			
