@@ -170,7 +170,7 @@ TileMap.prototype = {
 		}
 		var config = {};
 		config.area = this.area;
-		config.type = 3;
+		config.type = this.type;
 		config.hasInvertor = this.hasInvertor;
 		config.panelCount = 0;
 		config.tokens = [];
@@ -186,8 +186,8 @@ TileMap.prototype = {
 			tokenToPush.startTile = {'row':token.startTile.row,'column':token.startTile.column};
 			config.tokens.push(tokenToPush);
 		}
-		g_config = config;
-		console.log(config);
+		g_config = JSON.stringify(config);
+		console.log(g_config);
 	},
 	initTokenArray : function(tokenList) {
 		if ( tokenList && tokenList.length > 0 ) {
