@@ -337,12 +337,13 @@ body {
 	background: url(../img/diy-loginsubmit.png) left center no-repeat;
 	line-height: 25px;
 	height: 25px;
-	width: 80px;
+	width: 100px;
 	padding-left: 30px;
 	position: absolute;
 	bottom: 0;
 	margin-bottom: 18px;
 	left: 50%;
+	text-align: left;
 	margin-left: -55px;
 	font-weight: normal;
 	

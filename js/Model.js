@@ -140,6 +140,15 @@ TileMap.prototype = {
 		}
 		return tokens;
 	},
+	_sortTokens : function() {
+		this.tokens.sort(function(a, b){
+			if ( a.startTile.row == b.startTile.row ) {
+				return a.startTile.column - b.startTile.column;
+			} else {
+				return a.startTile.row - b.startTile.row;
+			}
+		});
+	},
 	getPanelCount : function() {
 		var panelCount = 0;
 		for ( i in this.tokens ) {
@@ -149,6 +158,19 @@ TileMap.prototype = {
 			}
 		}
 		return panelCount;
+	},
+	isPanelOnLeftSide : function() {
+		var minColumn = this.columnCount;
+		var maxColumn = 0;
+		for ( i in this.tokens ) {
+			var token = this.tokens[i];
+			if (token.type == TOKEN_TYPE_SOLAR) {
+				minColumn = Math.min(minColumn, token.startTile.column);
+				maxColumn = Math.max(maxColumn, token.startTile.column);
+			}
+		}
+		return (this.columnCount - maxColumn) - minColumn;
+
 	},
 	loadFromConfig : function(config) {
 		if ( config && config.tokens.length > 0 ) {
@@ -162,13 +184,14 @@ TileMap.prototype = {
 		var panelCount = this.getPanelCount();
 		if (! this.hasInvertor ) {
 			showAlertMessage("您还没有放入逆变器");
-			return;
+			return false;
 		}
 		if (panelCount < 1) {
 			showAlertMessage("您还没有放入太阳能发电板");
-			return;
+			return false;
 		}
-		var config = {};
+		g_config = {};
+		var config = g_config;
 		config.area = this.area;
 		config.type = this.type;
 		config.hasInvertor = this.hasInvertor;
@@ -186,8 +209,8 @@ TileMap.prototype = {
 			tokenToPush.startTile = {'row':token.startTile.row,'column':token.startTile.column};
 			config.tokens.push(tokenToPush);
 		}
-		g_config = JSON.stringify(config);
-		console.log(g_config);
+		
+		return g_config;
 	},
 	initTokenArray : function(tokenList) {
 		if ( tokenList && tokenList.length > 0 ) {
@@ -207,9 +230,7 @@ TileMap.prototype = {
 			this.tiles[i].token = this.tokens[tokenIndex];
 			
 			this.tokens[tokenIndex].tiles.push({ 'column': this.tiles[i].column, 'row': this.tiles[i].row} );
-			this.tokens[tokenIndex].startTile = this.tiles[i];
-			
-			
+			this.tokens[tokenIndex].startTile = this.tiles[i];			
 		}
 	},
 	getTile : function(row, column)
@@ -270,12 +291,13 @@ TileMap.prototype = {
 			}			
 		}
 		
-		console.log(tobeRemoved.length);
 		for ( index in tobeRemoved ) {
 			this.removeTokenWithId(tobeRemoved[index]);
 		}
 		
 		this.tokens = this.tokens.concat(newTokens);
+		
+		this._sortTokens();
 		return true;
 	}
 };
@@ -436,6 +458,9 @@ function createToken(type)
 function resetGlobal() {
 	if (g_stage) {
 		g_stage.clear();
+		createjs.Touch.disable(g_stage);
+		createjs.Ticker.removeAllEventListeners('tick');	
+		
 	}
 	g_canvas = null;
 	g_stage = null;
@@ -447,11 +472,12 @@ function resetGlobal() {
 	g_type = 0;
 	
 	g_isReadFromConfig = false;
-	g_config = null;
+
+	
 	
 }
 
-function init(config) {
+function initDiy(config) {
 
 	SM.RegisterState( "menu", MenuState );
 	SM.RegisterState( "preload", PreloadState );
@@ -470,4 +496,20 @@ function init(config) {
 	}
 	
 	SM.SetStateByName( "preload" );
+}
+
+function getDiyJSON() {
+	if ( !g_config ) {
+		alert('对不起，DIY结果未保存');
+		return;
+	} else {
+		return g_config;
+	}
+}
+
+function onExitDIY() {
+	$('#solarDiyContainer').fadeOut(function(){
+		console.log( 'DIY的配置结果为：\r\n' + JSON.stringify(getDiyJSON()) );
+	});
+	resetGlobal();
 }

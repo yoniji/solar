@@ -12,6 +12,16 @@ function OnEnterPreloadState()
 		{src:'./img/mixed-roof.png', id:"mixed-roof"},
 		{src:'./img/pitched-roof.png', id:"pitched-roof"},
 		{src:'./img/flat-roof.png', id:"flat-roof"},
+		{src:'./img/mixed-roof-icon.png', id:"mixed-roof-icon"},
+		{src:'./img/pitched-roof-icon.png', id:"pitched-roof-icon"},
+		{src:'./img/flat-roof-icon.png', id:"flat-roof-icon"},
+		
+		{src:'./img/diy-sun.png', id:"sun"},
+		{src:'./img/diy-sunlight.png', id:"sunlight"},
+		
+		{src:'./img/line-mixed.png', id:"line-mixed"},
+		{src:'./img/line-piched.png', id:"line-pitched"},
+		{src:'./img/line-flat.png', id:"line-flat"},
 		
 		{src:'./img/invertor-icon.png', id:"invertor-icon"},
 		{src:'./img/invertor.png', id:"invertor"},

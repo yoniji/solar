@@ -34,11 +34,12 @@ $(document).ready(function(){
 		var area = parseInt($('#ipt-area').val());
 		$('#testInput').hide();
 		
-		init(area);
+		initDiy(area);
 	});
 	$('#btn-import').click(function(){
 		$('#testInput').hide();
-		init(importConfig);
+		
+		initDiy(importConfig);
 	});
 });
 

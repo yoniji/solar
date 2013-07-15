@@ -2,20 +2,28 @@
 function OnEnterInGameState()
 {
 	$('#solarDiy').show();
-	$('#solarCanvasContainer,#solarDiy-panel-widget').fadeIn('fast');
+	$('#solarCanvasContainer,#solarDiy-panel-widget').show();
 	
 	g_canvas = document.getElementById("solarCanvas");
 	g_stage = new createjs.Stage(g_canvas);
 	
-	initInGame();
+	var txt = new createjs.Text("正在生成DIY画面...", "18px Sans-serif","#FFFFFF");
+	txt.textAlign = "center";
+	txt.x =  g_canvas.width / 2;
+	txt.y =  g_canvas.height / 2;
+
+	g_stage.addChild(txt);
 	
-	g_stage.enableDOMEvents(true);
-	g_stage.enableMouseOver(10);
+	createjs.Ticker.addEventListener("tick", tick);	
+	
+	
+	initInGame();
+	txt.alpha = 0;
 	
 	createjs.Touch.enable(g_stage);
 	createjs.Ticker.setFPS(24);
 		
-	createjs.Ticker.addEventListener("tick", tick);	
+	
 	
 
 }
@@ -52,7 +60,6 @@ function initInGame() {
 	
 	g_TileMapView = new TileMapView(g_TileMap);
 	g_TileMapView.init();
-	//g_stage.update();
 	
 	if ( g_isReadFromConfig ) {
 		g_TileMap.loadFromConfig(g_config);
@@ -72,7 +79,16 @@ function initInGame() {
 	});
 	
 	$('#diy-switcher a').bind('click', function() {
-		g_TileMap.exportConfig();
+		
+		
+		if ( g_TileMap.exportConfig() ) {
+			$(this).unbind();
+			$('.tokenLink').unbind();
+			createjs.Touch.disable(g_stage)
+			
+			g_TileMapView.showSun();
+		}			
+		
 	});
 	
 	
@@ -81,7 +97,10 @@ function initInGame() {
 function tick(event) {
     g_stage.update(event); 
 }
-
+function animationTick(event) {
+	g_TileMapView.updateAnimation();
+	 g_stage.update(event); 
+}
 
 var InGameState = new State( OnEnterInGameState, OnExitInGameState );
 
