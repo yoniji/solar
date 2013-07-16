@@ -5,8 +5,11 @@ g_TileMap,
 g_TileMapView,
 g_TileId = 0,
 g_assets,
-g_area = 0,
+g_area = 100,
 g_type = 0,
+g_houseArea = 100,
+g_houseTileType = 1,
+g_powerConsumption =1,
 g_isReadFromConfig = false,
 g_config = null;
 
@@ -478,7 +481,7 @@ function resetGlobal() {
 }
 
 function initDiy(config) {
-
+	SM.RegisterState( "input", InputState );
 	SM.RegisterState( "menu", MenuState );
 	SM.RegisterState( "preload", PreloadState );
 	SM.RegisterState( "ingame", InGameState );

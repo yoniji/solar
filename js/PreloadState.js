@@ -107,7 +107,7 @@ function handleComplete(event)
 	if ( g_isReadFromConfig ) {
 		SM.SetStateByName( "ingame" );
 	} else {
-		SM.SetStateByName( "menu" );
+		SM.SetStateByName( "input" );
 	}
 	
 }

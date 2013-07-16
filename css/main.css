@@ -406,7 +406,7 @@ body {
 	top: 131px;
 	left: 15px;
 	width: 685px;
-	height: 265px;
+	height: 280px;
 	background: #df5e25;
 	color: #fff;
 }
@@ -451,6 +451,7 @@ body {
 	float: left;
 	display: inline-block;
 	position: relative;
+	cursor: pointer;
 }
 .solarAreaInput-tileType .fakeRadio {
 	left: 20px;

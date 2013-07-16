@@ -23,7 +23,7 @@
 	    		<span id="solarDiy-loadingProgress">0</span>
     		</div><!--/solarDiy-loading-->
     		
-	    	<div id="solarDiy">  
+	    	<div id="solarDiy"  style="display:none">  
 	    		<div id="solarDiyInner">  
 		    		<div id="solarAreaInput">
 		    			<div id="solarAreaInput-container" style="padding:10px">
@@ -83,12 +83,11 @@
 		    			</ul>
 		    			<p>您的家庭每月用电量：</p>
 		    			<p>
-		    			<div class="powerConsumption"><div class="fakeRadio"></div><input type="radio" name="powerConsumption" value="1" />1~100度</div>
+		    			<div class="powerConsumption selected"><div class="fakeRadio"></div><input type="radio" name="powerConsumption" checked="checked" value="1" />1~100度</div>
 		    			<div class="powerConsumption"><div class="fakeRadio"></div><input type="radio" name="powerConsumption" value="2" />101~200度 </div>
 		    			<div class="powerConsumption"><div class="fakeRadio"></div><input type="radio" name="powerConsumption" value="3" />201~300度</div>
 		    			<div class="powerConsumption"><div class="fakeRadio"></div><input type="radio" name="powerConsumption" value="4" />300度以上</div>
 		    			</p>
-		    			<p><button id="btn-ok">确认</button>  <button id="btn-import">导入配置</button></p>
 		    			
 		    			</div>
 		    			<div id="solarCanvasTitle"><img src="img/freequote-title.png" alt="FREE QUOTE" /></div>
@@ -160,6 +159,7 @@
         <script src="js/Model.js"></script>
         <script src="js/View.js"></script>
         <script src="js/PreloadState.js"></script>
+         <script src="js/InputState.js"></script>
         <script src="js/MenuState.js"></script>
         <script src="js/InGameState.js"></script>
         <script src="js/main.js"></script>
