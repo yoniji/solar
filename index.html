@@ -17,27 +17,82 @@
     </head>
     <body>
     	
-    	<div id="solarDiyContainer">
-    	
-    		<div id="testInput">
-    			<h3>面积输入测试</h3>
-    			<p>屋顶面积：<input id="ipt-area" type="number" value="100" /> 平方米</p>
-    			<p><button id="btn-ok">确认</button>  <button id="btn-import">导入配置</button></p>
-    		</div>
-    		<!-- please remvoe #testInput before launch -->
-    		
+    	<div id="solarDiyContainer">    		
     		<div id="solarDiy-loading">
 	    		<img src="img/diyloader.gif" />
 	    		<span id="solarDiy-loadingProgress">0</span>
     		</div><!--/solarDiy-loading-->
     		
-	    	<div id="solarDiy" style="display:none">  
+	    	<div id="solarDiy">  
 	    		<div id="solarDiyInner">  
-		    		<div id="solarCanvasContainer"  style="display:none">    
-				        <canvas id="solarCanvas" width="694" height="412"></canvas>
-				        <div id="solarCanvasTitle"><img src="img/diy-title.png" alt="DIY" /></div>
-		    		</div><!--/solarCanvasContainer-->
-		    		
+		    		<div id="solarAreaInput">
+		    			<div id="solarAreaInput-container" style="padding:10px">
+		    			<p>您的房屋面积为：<input id="ipt-house" value="100" /> 平方米（请填写）</p>
+		    			<p>您的屋顶有效面积为：<input id="ipt-area"  value="100" /> 平方米（请填写）</p>
+		    			<p>您的屋顶材料：</p>
+		    			<ul id="solarAreaInput-tileTypeList" class="clearfix">
+		    				<li>
+		    				<input type="radio" name="tileType" class="radio-tileType" checked value="1" />
+		    				<div class="solarAreaInput-tileType selected">
+		    				<img src="img/diy-tile1.png" alt="水泥瓦" />
+		    				<p>水泥瓦</p>
+		    				<div class="fakeRadio"></div>
+		    				</div>
+		    				</li>
+		    				<li>
+		    				<input type="radio" name="tileType" class="radio-tileType" value="2" />
+		    				<div class="solarAreaInput-tileType">
+		    				<img src="img/diy-tile2.png" alt="彩钢板瓦" />
+		    				<p>彩钢板瓦</p>
+		    				<div class="fakeRadio"></div>
+		    				</div>
+		    				</li>
+		    				<li>
+		    				<input type="radio" name="tileType" class="radio-tileType" value="3" />
+		    				<div class="solarAreaInput-tileType">
+		    				<img src="img/diy-tile3.png" alt="黏土瓦" />
+		    				<p>黏土瓦</p>
+		    				<div class="fakeRadio"></div>
+		    				</div>
+		    				</li>
+		    				<li>
+		    				<input type="radio" name="tileType" class="radio-tileType" value="4" />
+		    				<div class="solarAreaInput-tileType">
+		    				<img src="img/diy-tile4.png" alt="金属瓦" />
+		    				<p>金属瓦</p>
+		    				<div class="fakeRadio"></div>
+		    				</div>
+		    				</li>
+		    				<li>
+		    				<input type="radio" name="tileType" class="radio-tileType" value="5" />
+		    				<div class="solarAreaInput-tileType">
+		    				<img src="img/diy-tile5.png" alt="琉璃瓦" />
+		    				<p>琉璃瓦</p>
+		    				<div class="fakeRadio"></div>
+		    				</div>
+		    				</li>
+		    				<li>
+		    				<input type="radio" name="tileType" class="radio-tileType" value="6" />
+		    				<div class="solarAreaInput-tileType">
+		    				<img src="img/diy-tile6.png" alt="沥青瓦" />
+		    				<p>沥青瓦</p>
+		    				<div class="fakeRadio"></div>
+		    				</div>
+		    				</li>
+
+		    			</ul>
+		    			<p>您的家庭每月用电量：</p>
+		    			<p>
+		    			<div class="powerConsumption"><div class="fakeRadio"></div><input type="radio" name="powerConsumption" value="1" />1~100度</div>
+		    			<div class="powerConsumption"><div class="fakeRadio"></div><input type="radio" name="powerConsumption" value="2" />101~200度 </div>
+		    			<div class="powerConsumption"><div class="fakeRadio"></div><input type="radio" name="powerConsumption" value="3" />201~300度</div>
+		    			<div class="powerConsumption"><div class="fakeRadio"></div><input type="radio" name="powerConsumption" value="4" />300度以上</div>
+		    			</p>
+		    			<p><button id="btn-ok">确认</button>  <button id="btn-import">导入配置</button></p>
+		    			
+		    			</div>
+		    			<div id="solarCanvasTitle"><img src="img/freequote-title.png" alt="FREE QUOTE" /></div>
+		    		</div><!--/solarAreaInput-->
 		    		<div id="solarSelectContainer" style="display:none">    
 				        <ul id="solarSelectList">
 				        	<li>
@@ -61,11 +116,13 @@
 				        </ul>
 				        <div id="solarCanvasTitle"><img src="img/diy-select-title.png" alt="DIY" width="110" /></div>
 		    		</div><!--/solarSelectContainer-->
-	    		
+							    		<div id="solarCanvasContainer"  style="display:none">    
+				        <canvas id="solarCanvas" width="694" height="412"></canvas>
+				        <div id="solarCanvasTitle"><img src="img/diy-title.png" alt="DIY" /></div>
+		    		</div><!--/solarCanvasContainer-->
 		    		<a id="solarDiyClose"><img src="img/diy-close.png" alt="close" title="close" /></a>
 	    		
 		        	<div id="solarDiy-panel">
-		        	
 		        		<div id="solarDiy-panel-widget" style="display:none">
 			        		<div id="solarDiy-panel-title"><img src="img/diypaneltitle.png" width="88"></div>
 			        		<ul id="tokenList" class="clearfix">
@@ -80,7 +137,7 @@
 			        		<div id="diy-switcher"><a title="开关"><img src="img/diyswitcher.png" width="35" /></a></div>
 		        		</div><!--/solarDiy-panel-widget-->
 		        		
-		        		<div id="solar-panel-select" style="display:none">
+		        		<div id="solar-panel-select">
 			        		<div id="solar-panel-login">
 			        			<div id="solar-panel-loginTitle">登陆获取更多服务</div>
 			        			<form id="diy-loginForm" method="post" name="diy-loginForm" action="#">

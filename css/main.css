@@ -89,7 +89,7 @@ body {
 	width: 100%;
 	height: 100%;
 }
-#solarCanvasContainer,#solarSelectContainer {
+#solarCanvasContainer,#solarSelectContainer,#solarAreaInput {
 	background: #dd5519;
 	width: 960px;
 	height: 480px;
@@ -390,8 +390,74 @@ body {
 	margin: 0;
 	font-weight: normal;
 }
-#ipt-area {
+#ipt-area,#ipt-house {
 	width: 50px;
+	padding: 0 0 0 5px;
+	line-height: 18px;
+	height: 18px;
+	background: #fff;
+	border-radius: 4px;
+	border:none;
+	box-shadow: none;
+	color: #dd5519;
+}
+#solarAreaInput-container {
+	position: relative;
+	top: 131px;
+	left: 15px;
+	width: 685px;
+	height: 265px;
+	background: #df5e25;
+	color: #fff;
+}
+#solarAreaInput #solarCanvasTitle {
+	top:37px;
+}
+#solarAreaInput-tileTypeList {
+	padding-left: 0;
+}
+#solarAreaInput-tileTypeList li {
+	list-style: none;
+	padding: 0;
+	width: 110px;
+	float: left;
+}
+.solarAreaInput-tileType {
+	text-align: center;
+	position: relative;
+	padding-left: 40px;
+	cursor: pointer;
+}
+.radio-tileType {
+	display: none;
+}
+.fakeRadio {
+	position: absolute;
+
+	width: 16px;
+	height: 16px;
+	background: url(../img/radio.png) 0 -16px no-repeat;
+}
+.powerConsumption input{
+	display: none;
+
+}
+.powerConsumption .fakeRadio {
+	left: 20px;
+}
+.powerConsumption {
+	padding-left: 40px;
+	width: 70px;
+	float: left;
+	display: inline-block;
+	position: relative;
+}
+.solarAreaInput-tileType .fakeRadio {
+	left: 20px;
+	top: 28px;	
+}
+.selected .fakeRadio {
+	background-position: 0 0;
 }
 /* ==========================================================================
    Helper classes

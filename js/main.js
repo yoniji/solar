@@ -32,14 +32,30 @@ var importConfig = {
 $(document).ready(function(){
 	$('#btn-ok').click(function(){
 		var area = parseInt($('#ipt-area').val());
-		$('#testInput').hide();
+		$('#solarAreaInput').hide();
 		
 		initDiy(area);
 	});
 	$('#btn-import').click(function(){
-		$('#testInput').hide();
+		$('#solarAreaInput').hide();
 		
 		initDiy(importConfig);
+	});
+	
+	$('.solarAreaInput-tileType').click(function() {
+		
+		$('.solarAreaInput-tileType.selected').removeClass('selected').prev('input')[0].checked = false;
+		
+		$(this).addClass('selected');
+		$(this).prev('input').attr('checked','true');
+	});
+	
+	$('.solarAreaInput-tileType').click(function() {
+		
+		$('.solarAreaInput-tileType.selected').removeClass('selected').prev('input')[0].checked = false;
+		
+		$(this).addClass('selected');
+		$(this).prev('input')[0].checked = true;
 	});
 });
 
