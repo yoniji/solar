@@ -186,7 +186,7 @@ TileMap.prototype = {
 	exportConfig : function() {
 		var panelCount = this.getPanelCount();
 		if (! this.hasInvertor ) {
-			showAlertMessage("您还没有放入逆变器");
+			showAlertMessage("您还没有放入发电控制器");
 			return false;
 		}
 		if (panelCount < 1) {
@@ -199,6 +199,10 @@ TileMap.prototype = {
 		config.type = this.type;
 		config.hasInvertor = this.hasInvertor;
 		config.panelCount = 0;
+		config.houseArea = g_houseArea;
+		config.houseTileType = g_houseTileType;
+		config.powerConsumption = g_powerConsumption;
+
 		config.tokens = [];
 		
 		for ( i in this.tokens ) {
@@ -487,11 +491,7 @@ function initDiy(config) {
 	SM.RegisterState( "ingame", InGameState );
 	
 	if ( config ) {
-		if ( typeof(config) == 'number' ) {
-		
-			g_area = config;
-			
-		} else if ( typeof(config) == 'object' ) {
+		if ( typeof(config) == 'object' ) {
 			g_isReadFromConfig = true;
 			g_config = config;
 			

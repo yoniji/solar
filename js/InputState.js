@@ -39,6 +39,11 @@ function OnEnterInputState()
 
 function OnExitInputState()
 {
+	g_area = parseInt($('#ipt-area').val());
+	g_houseArea = $('#ipt-house').val();
+	g_houseTileType = $('#radio-tileType:checked').val();
+	g_powerConsumption = $('.powerConsumption input:checked').val();
+	g_isReadFromConfig = false;
 	$('#solarAreaInput').hide();
 	$('#solar-panel-select-next').unbind('click');
 	$('#solarSelectContainer').fadeIn();

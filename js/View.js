@@ -1,32 +1,32 @@
-var MASK_PATH_FLAT_LEFT = [{"x":2, "y":136, "tick":0},
-			{"x":143, "y":253, "tick":24},
-			{"x":376, "y":116, "tick":24},
-			{"x":385, "y":195, "tick":12}
+var MASK_PATH_FLAT_LEFT = [{"x":0, "y":108, "tick":0},
+			{"x":118, "y":207, "tick":24},
+			{"x":308, "y":100, "tick":24},
+			{"x":318, "y":147, "tick":12}
 		],
-MASK_PATH_FLAT_RIGHT = [{"x":262, "y":2, "tick":0},
-			{"x":390, "y":108, "tick":24},
-			{"x":377, "y":116, "tick":12},
-			{"x":385, "y":195, "tick":12}
+MASK_PATH_FLAT_RIGHT = [{"x":210, "y":2, "tick":0},
+			{"x":321, "y":90, "tick":24},
+			{"x":308, "y":100, "tick":12},
+			{"x":318, "y":147, "tick":12}
 		],
-MASK_PATH_DESCENDENT_LEFT = [{"x":2, "y":189, "tick":0},
-			{"x":64, "y":310, "tick":24},
-			{"x":276, "y":175, "tick":24},
-			{"x":282, "y":201, "tick":12}
+MASK_PATH_DESCENDENT_LEFT = [{"x":2, "y":131, "tick":0},
+			{"x":37, "y":191, "tick":24},
+			{"x":225, "y":115, "tick":24},
+			{"x":230, "y":146, "tick":12}
 		],
-MASK_PATH_DESCENDENT_RIGHT = [{"x":231, "y":9, "tick":0},
-			{"x":305, "y":157, "tick":24},
-			{"x":283, "y":170, "tick":12},
-			{"x":282, "y":201, "tick":12}
+MASK_PATH_DESCENDENT_RIGHT = [{"x":185, "y":2, "tick":0},
+			{"x":244, "y":106, "tick":24},
+			{"x":225, "y":115, "tick":12},
+			{"x":230, "y":146, "tick":12}
 		],
-MASK_PATH_DOUBLE_LEFT = [{"x":2, "y":101, "tick":0},
-			{"x":102, "y":293, "tick":24},
-			{"x":289, "y":168, "tick":24},
-			{"x":295, "y":190, "tick":12}
+MASK_PATH_DOUBLE_LEFT = [{"x":2.5, "y":95, "tick":0},
+			{"x":83, "y":245, "tick":24},
+			{"x":284, "y":161, "tick":24},
+			{"x":292, "y":186, "tick":12}
 		],
-MASK_PATH_DOUBLE_RIGHT = [{"x":252, "y":1, "tick":0},
-			{"x":330, "y":143, "tick":24},
-			{"x":290, "y":168, "tick":12},
-			{"x":295, "y":190, "tick":12}
+MASK_PATH_DOUBLE_RIGHT = [{"x":253, "y":2, "tick":0},
+			{"x":330, "y":144, "tick":24},
+			{"x":284, "y":161, "tick":12},
+			{"x":292, "y":186, "tick":12}
 		];
 var TileMapView = function(tileMapModel)
 {
@@ -118,9 +118,9 @@ TileMapView.prototype = {
 			this.tileMapPixelWidth = 240;
 			this.tileMapPixelHeight = 120;
 			this.angleX = -30;
-			this.angleY = -24;
-			this.startX = 205;
-			this.startY = 160;
+			this.angleY = -23;
+			this.startX = 198;
+			this.startY = 155;
 			//create house bitmap
 			this.tileMapBmp = new createjs.Bitmap(g_assets['mixed-roof'].img);
 			this.tileMapBmp.setTransform(108,48,0.5,0.5);
@@ -128,12 +128,12 @@ TileMapView.prototype = {
 			break;
 			
 			case TILE_MAP_TYPE_DESCENDENT:
-			this.tileMapPixelWidth = 240;
-			this.tileMapPixelHeight = 120;
+			this.tileMapPixelWidth = 220;
+			this.tileMapPixelHeight = 110;
 			this.angleX = -30;
-			this.angleY = -24;
-			this.startX = 225;
-			this.startY = 180;
+			this.angleY = -23;
+			this.startX = 210;
+			this.startY = 170;
 			//create house bitmap
 			this.tileMapBmp = new createjs.Bitmap(g_assets['pitched-roof'].img);
 			console.log(g_assets['pitched-roof']);
@@ -146,8 +146,8 @@ TileMapView.prototype = {
 			this.tileMapPixelHeight = 144;
 			this.angleX = -50;
 			this.angleY = -28;
-			this.startX = 195;
-			this.startY = 148;
+			this.startX = 180;
+			this.startY = 168;
 			this.tileMapBmp = new createjs.Bitmap(g_assets['flat-roof'].img);
 			this.tileMapBmp.setTransform(165,27,0.5,0.5);
 			g_stage.addChild(this.tileMapBmp);	
@@ -175,10 +175,10 @@ TileMapView.prototype = {
 		this.switch = new createjs.Bitmap(g_assets['invertor'].img);
 		switch( this.model.type ) {
 			case TILE_MAP_TYPE_DOUBLE:
-			this.switch.setTransform(446 , 215, 0.5, 0.5);
+			this.switch.setTransform(435 , 225, 0.5, 0.5);
 			break;
 			case TILE_MAP_TYPE_DESCENDENT:
-			this.switch.setTransform(480 , 230, 0.5, 0.5);
+			this.switch.setTransform(440 , 226, 0.5, 0.5);
 			break;
 			default:
 			this.switch.setTransform(503 , 213, 0.5, 0.5);
@@ -198,14 +198,14 @@ TileMapView.prototype = {
 		  this.sunLayer.addChild(this.sun);
 		 this.sunshine = new createjs.Bitmap(g_assets['sunlight'].img);
 		 this.sunshine.x = 365;
-		 this.sunshine.y = 65;
+		 this.sunshine.y = 85;
 		 this.sunLayer.addChild(this.sunshine);
 		 
 		 this.sunshineMask = new createjs.Shape(
                 new createjs.Graphics().beginFill("#000000")
                         .drawCircle(0, 0, 32));
          this.sunshineMask.x = 532;
-         this.sunshineMask.y = 42;
+         this.sunshineMask.y = 62;
          this.sunshineMask.alpha = 0;
          
          this.sunshine.mask = this.sunshineMask;
@@ -218,15 +218,15 @@ TileMapView.prototype = {
 		switch ( this.model.type ) {
 			case TILE_MAP_TYPE_FLAT:
 			this.wire = new createjs.Bitmap(g_assets['line-flat'].img);
-			this.wire.setTransform(178,30,0.89,0.89);
+			this.wire.setTransform(178,60);
 			break;
 			case TILE_MAP_TYPE_DOUBLE:
 			this.wire = new createjs.Bitmap(g_assets['line-mixed'].img);
-			this.wire.setTransform(188,49,0.94,0.94);
+			this.wire.setTransform(188,65,0.92,0.85);
 			break;
 			default:
 			this.wire = new createjs.Bitmap(g_assets['line-pitched'].img);
-			this.wire.setTransform(242,60,0.88,0.88);
+			this.wire.setTransform(230,80);
 			break;
 			
 			
@@ -244,7 +244,7 @@ TileMapView.prototype = {
 		} );
 		
 		
-		
+		//this.wireLayer.addChild(this.wire);
 		//this.wireLayer.addChild(this.wireMask);
 	},
 	_moveToNextMaskAnimation : function() {

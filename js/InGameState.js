@@ -2,6 +2,7 @@
 function OnEnterInGameState()
 {
 	$('#solarDiy').show();
+	$('#solarAreaInput,#solar-panel-select').hide();
 	$('#solarCanvasContainer,#solarDiy-panel-widget').show();
 	
 	g_canvas = document.getElementById("solarCanvas");

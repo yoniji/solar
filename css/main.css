@@ -186,11 +186,12 @@ body {
 }
 
 #tokenLink-solar img{
-	padding-top: 5px;
-	width: 35px;
+	padding-top: 6px;
+	width: 30px;
 }
 #tokenLink-heater img{
-	padding-top: 9px;
+	padding-top: 7px;
+	padding-left: 2px;
 	width:55px; 
 }
 #tokenLink-receiver img{
@@ -202,17 +203,32 @@ body {
 	width:60px; 
 }
 #tokenLink-chimney img{
-	padding-top: 11px;
+	padding-top: 9px;
 	width:40px; 
 }
 #tokenLink-invertor img{
-	padding-top: 13px;
+	padding-top: 10px;
 	width:40px; 
 }
 #diy-switcher {
 	cursor: pointer;
-	padding-left: 110px;
 	padding-top: 5px;
+}
+#diy-switcher  span{
+	display: inline-block;
+	width: 100px;
+	padding-right: 10px;
+	vertical-align: top;
+	padding-top: 8px;
+	font-size: 14px;
+	line-height: 16px;
+	text-align: right;
+}
+#diy-switcher a {
+	display: inline-block;
+	width: 32px;
+	
+	vertical-align: top;
 }
 #solarDiyClose {
 	position: absolute;
@@ -322,15 +338,15 @@ body {
 	padding-right: 5px;
 }
 #solarSelect-flat img{
-	width: 165px;
+	width: 168px;
 	margin-top: 40px;
 }
 #solarSelect-double img{
-	width: 190px;
+	width: 194px;
 	margin-top: 48px;
 }
 #solarSelect-pitch img{
-	width: 187px;
+	width: 188px;
 	margin-top: 40px;
 }
 .solarSelectTitle {
