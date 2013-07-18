@@ -25,6 +25,7 @@ function OnEnterPreloadState()
 		
 		{src:'./img/invertor-icon.png', id:"invertor-icon"},
 		{src:'./img/invertor.png', id:"invertor"},
+		{src:'./img/invertor-flat.png', id:"invertor-flat"},
 		
 		{src:'./img/token-chimney-20.png', id:"token-chimney-20"},
 		{src:'./img/token-chimney-32.png', id:"token-chimney-32"},
@@ -58,6 +59,10 @@ function OnEnterPreloadState()
 		{src:'./img/token-window-32.png', id:"token-window-32"},
 		{src:'./img/token-window-50.png', id:"token-window-50"},
 		{src:'./img/token-window-100.png', id:"token-window-100"},
+		{src:'./img/token-window-flat-20.png', id:"token-window-flat-20"},
+		{src:'./img/token-window-flat-32.png', id:"token-window-flat-32"},
+		{src:'./img/token-window-flat-50.png', id:"token-window-flat-50"},
+		{src:'./img/token-window-flat-100.png', id:"token-window-flat-100"},
 		{src:'./img/token-window-icon.png', id:"token-window-icon"}
 	];
 

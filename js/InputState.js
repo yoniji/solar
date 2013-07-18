@@ -4,8 +4,14 @@ function OnEnterInputState()
 	
 	
 	$('#solar-panel-select-next').click(function(){
-		var area = parseInt($('#ipt-area').val());
-		SM.SetStateByName( "menu" );
+		var area = $('#ipt-area').val();
+		var houseArea = $('#ipt-house').val();
+		if ( IsValidArea(area) && IsValidArea(houseArea)) {
+			SM.SetStateByName( "menu" );
+		} else {
+			alert("请输入正确的面积");
+		}
+		
 		
 	});
 	
@@ -40,9 +46,9 @@ function OnEnterInputState()
 function OnExitInputState()
 {
 	g_area = parseInt($('#ipt-area').val());
-	g_houseArea = $('#ipt-house').val();
-	g_houseTileType = $('#radio-tileType:checked').val();
-	g_powerConsumption = $('.powerConsumption input:checked').val();
+	g_houseArea = parseInt($('#ipt-house').val());
+	g_houseTileType = parseInt($('.radio-tileType:checked').val());
+	g_powerConsumption = parseInt($('.powerConsumption input:checked').val());
 	g_isReadFromConfig = false;
 	$('#solarAreaInput').hide();
 	$('#solar-panel-select-next').unbind('click');
@@ -51,3 +57,21 @@ function OnExitInputState()
 
 
 var InputState = new State( OnEnterInputState, OnExitInputState );
+
+function IsValidArea(value) {
+
+        if (value.length == 0) {
+            return false;
+        }
+
+        var intValue = parseInt(value);
+        if (isNaN(intValue)) {
+            return false;
+        }
+
+        if (intValue <= 0)
+        {
+            return false;
+        }
+        return true;
+}

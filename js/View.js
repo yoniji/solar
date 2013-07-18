@@ -1,21 +1,21 @@
 var MASK_PATH_FLAT_LEFT = [{"x":0, "y":108, "tick":0},
 			{"x":118, "y":207, "tick":24},
-			{"x":308, "y":100, "tick":24},
+			{"x":308, "y":99, "tick":24},
 			{"x":318, "y":147, "tick":12}
 		],
 MASK_PATH_FLAT_RIGHT = [{"x":210, "y":2, "tick":0},
 			{"x":321, "y":90, "tick":24},
-			{"x":308, "y":100, "tick":12},
+			{"x":315, "y":95, "tick":12},
 			{"x":318, "y":147, "tick":12}
 		],
 MASK_PATH_DESCENDENT_LEFT = [{"x":2, "y":131, "tick":0},
 			{"x":37, "y":191, "tick":24},
-			{"x":225, "y":115, "tick":24},
+			{"x":221, "y":116, "tick":24},
 			{"x":230, "y":146, "tick":12}
 		],
 MASK_PATH_DESCENDENT_RIGHT = [{"x":185, "y":2, "tick":0},
 			{"x":244, "y":106, "tick":24},
-			{"x":225, "y":115, "tick":12},
+			{"x":230, "y":111, "tick":12},
 			{"x":230, "y":146, "tick":12}
 		],
 MASK_PATH_DOUBLE_LEFT = [{"x":2.5, "y":95, "tick":0},
@@ -25,7 +25,7 @@ MASK_PATH_DOUBLE_LEFT = [{"x":2.5, "y":95, "tick":0},
 		],
 MASK_PATH_DOUBLE_RIGHT = [{"x":253, "y":2, "tick":0},
 			{"x":330, "y":144, "tick":24},
-			{"x":284, "y":161, "tick":12},
+			{"x":292, "y":159, "tick":12},
 			{"x":292, "y":186, "tick":12}
 		];
 var TileMapView = function(tileMapModel)
@@ -90,8 +90,12 @@ TileMapView.prototype = {
 		this.sunLayer = new createjs.Container();
 		this.wireLayer = new createjs.Container();
 		
+		
 		g_stage.addChild(this.tokenLayer1);
 		g_stage.addChild(this.tokenLayer2);
+		
+		//make sure invertor is under wire layer
+		this._initInvertor();
 		g_stage.addChild(this.sunLayer);
 		g_stage.addChild(this.wireLayer);
 		
@@ -108,7 +112,7 @@ TileMapView.prototype = {
 		
 		this._initSunLayer();
 		this._initWireLayer();
-		this._initInvertor();
+		
 		this._drawTokens();
 		
 	},
@@ -136,7 +140,6 @@ TileMapView.prototype = {
 			this.startY = 170;
 			//create house bitmap
 			this.tileMapBmp = new createjs.Bitmap(g_assets['pitched-roof'].img);
-			console.log(g_assets['pitched-roof']);
 			this.tileMapBmp.setTransform(130,60,0.5,0.5);
 			g_stage.addChild(this.tileMapBmp);	
 			break;
@@ -172,16 +175,19 @@ TileMapView.prototype = {
 		}
 	},
 	_initInvertor : function() {
-		this.switch = new createjs.Bitmap(g_assets['invertor'].img);
+		
 		switch( this.model.type ) {
 			case TILE_MAP_TYPE_DOUBLE:
+			this.switch = new createjs.Bitmap(g_assets['invertor'].img);
 			this.switch.setTransform(435 , 225, 0.5, 0.5);
 			break;
 			case TILE_MAP_TYPE_DESCENDENT:
+			this.switch = new createjs.Bitmap(g_assets['invertor'].img);
 			this.switch.setTransform(440 , 226, 0.5, 0.5);
 			break;
 			default:
-			this.switch.setTransform(503 , 213, 0.5, 0.5);
+			this.switch = new createjs.Bitmap(g_assets['invertor-flat'].img);
+			this.switch.setTransform(473 , 197, 0.5, 0.5);
 			break;
 		}
 		if (! this.model.hasInvertor ) {
@@ -242,9 +248,9 @@ TileMapView.prototype = {
 			var x = that.wire.globalToLocal(e.stageX, e.stageY);
 			console.log(x);
 		} );
+		this.wire.alpha = 0;
 		
-		
-		//this.wireLayer.addChild(this.wire);
+		this.wireLayer.addChild(this.wire);
 		//this.wireLayer.addChild(this.wireMask);
 	},
 	_moveToNextMaskAnimation : function() {
@@ -346,8 +352,8 @@ TileMapView.prototype = {
 		
 			
 		this._moveToNextMaskAnimation();
-		
-		this.wireLayer.addChild(this.wire);
+		this.wire.alpha = 1;
+		//this.wireLayer.addChild(this.wire);
 		
 	},
 	showInvertor : function() {
@@ -454,7 +460,11 @@ TokenView.prototype = {
 			return new createjs.Bitmap(g_assets[this.img].img);
 			
 			case TOKEN_TYPE_WINDOW:
-			this.img = "token-window-" + this.baseSize;
+			if ( g_type == TILE_MAP_TYPE_FLAT ) {
+				this.img = "token-window-flat-" + this.baseSize;
+			} else {
+				this.img = "token-window-" + this.baseSize;
+			}
 			return new createjs.Bitmap(g_assets[this.img].img);
 			
 			case TOKEN_TYPE_RECEIVER:
@@ -506,13 +516,13 @@ TokenView.prototype = {
 			break;
 			
 			case TOKEN_TYPE_WINDOW:
-			this.scale = this.scale * 0.7;
+			this.scale = this.scale;
 			if ( g_type == TILE_MAP_TYPE_FLAT ) {
 				this.x = this.x + this.width * 0.5;
 				this.y = this.y - this.height * 0.4;
 			} else {
-				this.x = this.x + this.width * 0.3;
-				this.y = this.y - this.height * 0.2;
+				this.x = this.x + this.width * 0.1;
+				this.y = this.y - this.height * 0.4;
 			}
 			
 			

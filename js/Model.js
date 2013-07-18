@@ -146,7 +146,7 @@ TileMap.prototype = {
 	_sortTokens : function() {
 		this.tokens.sort(function(a, b){
 			if ( a.startTile.row == b.startTile.row ) {
-				return a.startTile.column - b.startTile.column;
+				return b.startTile.column - a.startTile.column;
 			} else {
 				return a.startTile.row - b.startTile.row;
 			}
@@ -178,8 +178,14 @@ TileMap.prototype = {
 	loadFromConfig : function(config) {
 		if ( config && config.tokens.length > 0 ) {
 			this.tokens = this._parseConfigToArray(config.tokens);
-			console.log(config.hasInvertor);
 			this.hasInvertor = config.hasInvertor;
+			
+			this.area = config.area;
+			this.type = config.type;
+			this.hasInvertor = config.hasInvertor;
+			g_houseArea = config.houseArea;
+			g_houseTileType = config.houseTileType;
+			g_powerConsumption = config.powerConsumption;
 		}
 		
 	},
