@@ -75,7 +75,7 @@ TileMap.prototype = {
 			break;
 			
 			case TILE_MAP_TYPE_DESCENDENT:
-			var widthLengthRatio = 0.5;
+			var widthLengthRatio = 0.6;
 			this.width = Math.round(Math.sqrt(this.area / ( widthLengthRatio * 2 )));
 			this.height = Math.round(this.width * widthLengthRatio );
 			break;
@@ -312,6 +312,14 @@ TileMap.prototype = {
 		
 		this._sortTokens();
 		return true;
+	},
+	selectTokensByRow : function(row) {
+		for ( tokenIndex in this.tokens ) {
+			if ( this.tokens[tokenIndex].startTile.row == row && this.tokens[tokenIndex].type == TOKEN_TYPE_NONE ) {
+				this.tokens[tokenIndex].isSelected = true;
+				
+			}
+		}
 	}
 };
 

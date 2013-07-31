@@ -132,12 +132,12 @@ TileMapView.prototype = {
 			break;
 			
 			case TILE_MAP_TYPE_DESCENDENT:
-			this.tileMapPixelWidth = 220;
-			this.tileMapPixelHeight = 110;
+			this.tileMapPixelWidth = 230;
+			this.tileMapPixelHeight = 138;
 			this.angleX = -30;
 			this.angleY = -23;
-			this.startX = 210;
-			this.startY = 170;
+			this.startX = 197;
+			this.startY = 158;
 			//create house bitmap
 			this.tileMapBmp = new createjs.Bitmap(g_assets['pitched-roof'].img);
 			this.tileMapBmp.setTransform(130,60,0.5,0.5);
@@ -259,7 +259,7 @@ TileMapView.prototype = {
 			createjs.Ticker.removeEventListener("tick", animationTick);
 			createjs.Ticker.addEventListener("tick", tick);
 			
-			setTimeout(onExitDIY, 1000);
+			setTimeout(this._showVideo(), 2000);
 			return;
 		}
 				
@@ -272,6 +272,18 @@ TileMapView.prototype = {
 		this.wireMaskMoveStep = {"x": (this.wireMaskPoints[0].x - currentAnimation.x) / this.wireMaskTotalTickCount ,  "y": (this.wireMaskPoints[0].y - currentAnimation.y) / this.wireMaskTotalTickCount };
 		
 
+	},
+	_showVideo:function() {
+		var video = $('#solarDiyVideo');
+		
+		video.fadeIn('fast');
+		video[0].play();
+		
+		video.on('ended', function(e){
+			onExitDIY();
+
+		});
+		
 	},
 	_isPanelOnLeftSide : function() {
 		return this.model.isPanelOnLeftSide();	
@@ -364,6 +376,10 @@ TileMapView.prototype = {
 
 		this.model.putTokenInSelection(type);
 		this._drawTokens();
+	},
+	selectTokensByRow : function(row) {
+		this.model.selectTokensByRow(row);
+		this._drawTokens();
 	}
 };
 
@@ -420,9 +436,13 @@ TokenView.prototype = {
 				}
 			}
 		}
+				
+	},
+	_handleDbclick : function(e) {
 		
-		
-		
+		if ( this.tileMapView.isDIY ) {
+			this.tileMapView.selectTokensByRow(this.model.startTile.row);
+		}
 	},
 	_calculateBitmapBaseSize : function() {
 		if ( this.width < 21 ) {
@@ -548,7 +568,12 @@ TokenView.prototype = {
 		}
 		
 		if ( token.type == TOKEN_TYPE_NONE ) {
-			this._drawNormalToken(token.type);
+			if ( token.isSelected == true ) {
+				this._drawSelectedToken(token.type);
+			} else {
+				this._drawNormalToken(token.type);
+			}
+			
 			this.tileMapView.tokenLayer1.addChild( this.shape );
 			var globalPoint = this.shape.localToGlobal(0 ,0 );
 
@@ -575,7 +600,7 @@ TokenView.prototype = {
 		
 		
 		this.shape.addEventListener('click',this._handleClick.bind(this) );
-		
+		this.shape.addEventListener('dblclick',this._handleDbclick.bind(this));
 		
 	}
 }
